@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q COLD 🥶</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 0%, #0a2a4a 0%, #001428 50%, #000a12 100%);
+    font-family: 'Segoe UI', 'Arial Black', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    perspective: 1000px;
+  }
+
+  /* ===== СНЕЖИНКИ ===== */
+  .snowflake {
+    position: fixed;
+    top: -20px;
+    color: #d0f0ff;
+    pointer-events: none;
+    z-index: 1;
+    animation: fall linear infinite;
+    text-shadow: 0 0 10px #00ffff;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); }
+    100% { transform: translateY(105vh) rotate(720deg); }
+  }
+
+  /* ===== ПЛАВАЮЩИЕ ЛЕДЯНЫЕ КУБЫ ===== */
+  .ice-cube {
+    position: fixed;
+    font-size: 2rem;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 1;
+    animation: cubeFloat 10s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px #00bfff);
+  }
+  @keyframes cubeFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.35; }
+    50% { transform: translateY(-40px) rotate(180deg) scale(1.3); opacity: 0.7; }
+  }
+
+  /* ===== НЕОНОВЫЕ ЛУЧИ СЗАДИ ===== */
+  .rays {
+    position: fixed;
+    width: 200vw;
+    height: 200vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(0, 200, 255, 0.15) 20deg,
+      transparent 40deg,
+      transparent 60deg,
+      rgba(0, 255, 255, 0.1) 80deg,
+      transparent 100deg,
+      transparent 140deg,
+      rgba(0, 180, 255, 0.12) 160deg,
+      transparent 180deg,
+      transparent 220deg,
+      rgba(0, 255, 255, 0.1) 240deg,
+      transparent 260deg,
+      transparent 300deg,
+      rgba(0, 200, 255, 0.12) 320deg,
+      transparent 340deg
+    );
+    animation: spinRays 20s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+  }
+  @keyframes spinRays {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* ===== ГЛАВНАЯ КАРТОЧКА ===== */
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 750px;
+    width: 100%;
+    background: rgba(0, 30, 60, 0.55);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(0, 255, 255, 0.35);
+    border-radius: 40px;
+    padding: 50px 30px;
+    box-shadow:
+      0 0 80px rgba(0, 200, 255, 0.5),
+      0 0 150px rgba(0, 100, 255, 0.3),
+      inset 0 0 80px rgba(0, 150, 255, 0.15);
+    animation: cardPulse 3s ease-in-out infinite;
+  }
+  @keyframes cardPulse {
+    0%, 100% {
+      box-shadow: 0 0 80px rgba(0, 200, 255, 0.5), 0 0 150px rgba(0, 100, 255, 0.3), inset 0 0 80px rgba(0, 150, 255, 0.15);
+      border-color: rgba(0, 255, 255, 0.35);
+    }
+    50% {
+      box-shadow: 0 0 120px rgba(0, 255, 255, 0.9), 0 0 250px rgba(0, 150, 255, 0.5), inset 0 0 120px rgba(0, 200, 255, 0.3);
+      border-color: rgba(0, 255, 255, 0.8);
+    }
+  }
+
+  /* ===== Q COLD ГЛАВНЫЙ ТЕКСТ ===== */
+  .q-cold-main {
+    font-size: clamp(3.5rem, 15vw, 7rem);
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    line-height: 1;
+    background: linear-gradient(45deg, #00ffff, #ffffff, #00bfff, #e0f7ff, #00ffff, #7ff0ff);
+    background-size: 500% 500%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 2.5s ease infinite, shiver 0.15s ease-in-out infinite alternate, glowText 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.9)) drop-shadow(0 0 60px rgba(0, 150, 255, 0.5));
+    margin: 10px 0 20px;
+    transform-origin: center;
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes shiver {
+    from { transform: rotate(-2deg) scale(1) translateX(-3px); }
+    to { transform: rotate(2deg) scale(1.03) translateX(3px); }
+  }
+  @keyframes glowText {
+    0%, 100% { filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.9)) drop-shadow(0 0 60px rgba(0, 150, 255, 0.5)); }
+    50% { filter: drop-shadow(0 0 50px rgba(0, 255, 255, 1)) drop-shadow(0 0 100px rgba(0, 200, 255, 0.8)); }
+  }
+
+  /* ===== ГЛИТЧ-ЭФФЕКТ НА Q COLD ===== */
+  .glitch-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch-wrap::before,
+  .glitch-wrap::after {
+    content: 'Q COLD';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    opacity: 0;
+  }
+  .glitch-wrap::before {
+    color: #ff00ff;
+    animation: glitch1 3s infinite;
+    z-index: -1;
+  }
+  .glitch-wrap::after {
+    color: #00ffff;
+    animation: glitch2 3s infinite;
+    z-index: -1;
+  }
+  @keyframes glitch1 {
+    0%, 90%, 100% { opacity: 0; transform: translate(0); }
+    92% { opacity: 0.8; transform: translate(-4px, 2px); }
+    94% { opacity: 0.8; transform: translate(4px, -2px); }
+    96% { opacity: 0.8; transform: translate(-2px, 0); }
+  }
+  @keyframes glitch2 {
+    0%, 90%, 100% { opacity: 0; transform: translate(0); }
+    93% { opacity: 0.8; transform: translate(4px, 2px); }
+    95% { opacity: 0.8; transform: translate(-4px, -2px); }
+    97% { opacity: 0.8; transform: translate(2px, 0); }
+  }
+
+  /* ===== ЭМОДЗИ-ВЗРЫВ ===== */
+  .ice-emojis {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .ice-emojis span {
+    display: inline-block;
+    animation: emojiBounce 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    filter: drop-shadow(0 0 20px #00ffff);
+  }
+  .ice-emojis span:nth-child(1) { animation-delay: 0s; }
+  .ice-emojis span:nth-child(2) { animation-delay: 0.15s; }
+  .ice-emojis span:nth-child(3) { animation-delay: 0.3s; }
+  .ice-emojis span:nth-child(4) { animation-delay: 0.45s; }
+  .ice-emojis span:nth-child(5) { animation-delay: 0.6s; }
+  @keyframes emojiBounce {
+    0%, 100% { transform: translateY(0) rotate(-15deg) scale(1); }
+    50% { transform: translateY(-25px) rotate(15deg) scale(1.3); }
+  }
+
+  /* ===== МЕМ-ТЕКСТ ===== */
+  .meme-line {
+    font-size: clamp(0.9rem, 3vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #a8e6ff;
+    margin: 8px 0;
+    text-shadow: 0 0 15px rgba(0, 200, 255, 0.6);
+    animation: fadeSlide 4s ease-in-out infinite;
+  }
+  .meme-line:nth-child(2) { animation-delay: 0.5s; }
+  @keyframes fadeSlide {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-5px); }
+  }
+
+  /* ===== КНОПКА ===== */
+  button {
+    margin-top: 25px;
+    padding: 18px 50px;
+    font-size: clamp(1rem, 4vw, 1.35rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #001a2e;
+    background: linear-gradient(135deg, #a8e6ff 0%, #00ffff 50%, #a8e6ff 100%);
+    background-size: 300% 300%;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    box-shadow:
+      0 0 30px rgba(0, 255, 255, 0.7),
+      0 0 60px rgba(0, 200, 255, 0.4),
+      0 10px 0 #006a8a,
+      0 15px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.12s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation: gradientShift 2s ease infinite;
+    position: relative;
+    overflow: hidden;
+  }
+  button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%);
+    animation: shine 3s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  }
+  button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow:
+      0 0 50px rgba(0, 255, 255, 1),
+      0 0 100px rgba(0, 200, 255, 0.7),
+      0 15px 0 #006a8a,
+      0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+  button:active {
+    transform: translateY(8px) scale(0.98);
+    box-shadow:
+      0 0 25px rgba(0, 255, 255, 0.7),
+      0 0 50px rgba(0, 200, 255, 0.4),
+      0 3px 0 #006a8a;
+  }
+
+  /* ===== СЮРПРИЗ ===== */
+  #surprise {
+    margin-top: 25px;
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+    font-weight: 900;
+    color: #ffffff;
+    min-height: 2.5em;
+    text-shadow: 0 0 25px rgba(0, 255, 255, 1), 0 0 50px rgba(0, 200, 255, 0.7);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    padding: 0 10px;
+  }
+  .pop {
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+  @keyframes popIn {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    70% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  /* ===== ВЗРЫВ ЧАСТИЦ ПРИ КЛИКЕ ===== */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+    font-size: 1.5rem;
+    animation: particleFly 1.2s ease-out forwards;
+  }
+  @keyframes particleFly {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== РЯБЬ-ВОЛНА ОТ КНОПКИ ===== */
+  .ripple {
+    position: fixed;
+    border-radius: 50%;
+    border: 3px solid #00ffff;
+    pointer-events: none;
+    z-index: 50;
+    animation: rippleExpand 1s ease-out forwards;
+  }
+  @keyframes rippleExpand {
+    0% { width: 0; height: 0; opacity: 1; }
+    100% { width: 400px; height: 400px; opacity: 0; margin-left: -200px; margin-top: -200px; }
+  }
+
+  /* ===== ШЕЙК ЭКРАНА ===== */
+  @keyframes shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-10px, -5px) rotate(-1deg); }
+    20% { transform: translate(10px, 5px) rotate(1deg); }
+    30% { transform: translate(-8px, 8px) rotate(-1deg); }
+    40% { transform: translate(8px, -8px) rotate(1deg); }
+    50% { transform: translate(-5px, 5px) rotate(-0.5deg); }
+    60% { transform: translate(5px, -5px) rotate(0.5deg); }
+    70% { transform: translate(-3px, 3px) rotate(0deg); }
+    80% { transform: translate(3px, -3px) rotate(0deg); }
+    90% { transform: translate(-1px, 1px) rotate(0deg); }
+  }
+  .shake-screen { animation: shake 0.6s ease; }
+
+  /* ===== ИНВЕРСИЯ ===== */
+  .invert-screen { animation: invertFlash 0.4s ease; }
+  @keyframes invertFlash {
+    0%, 100% { filter: invert(0); }
+    50% { filter: invert(1) hue-rotate(180deg); }
+  }
+
+  /* ===== ЛЕДЯНОЙ ОВЕРЛЕЙ ===== */
+  .ice-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(200, 240, 255, 0.9) 0%, rgba(0, 100, 200, 0.6) 50%, transparent 70%);
+    pointer-events: none;
+    z-index: 90;
+    opacity: 0;
+    animation: iceFlash 0.8s ease-out;
+  }
+  @keyframes iceFlash {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* ===== ФУТЕР ===== */
+  .footer-note {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: rgba(168, 230, 255, 0.5);
+    font-style: italic;
+    letter-spacing: 1px;
+  }
+
+  /* ===== МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+  @media (max-width: 500px) {
+    .container { padding: 35px 18px; border-radius: 30px; }
+    .ice-emojis { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Лучи сзади -->
+  <div class="rays"></div>
+
+  <!-- Плавающие кубы -->
+  <div class="ice-cube" style="top: 10%; left: 6%; animation-delay: 0s;">🧊</div>
+  <div class="ice-cube" style="top: 25%; right: 8%; animation-delay: 1.5s; font-size: 3rem;">🧊</div>
+  <div class="ice-cube" style="bottom: 15%; left: 10%; animation-delay: 3s;">❄️</div>
+  <div class="ice-cube" style="bottom: 30%; right: 6%; animation-delay: 4.5s; font-size: 2.5rem;">🥶</div>
+  <div class="ice-cube" style="top: 60%; left: 4%; animation-delay: 2s;">☃️</div>
+  <div class="ice-cube" style="top: 45%; right: 4%; animation-delay: 5s;">❄️</div>
+
+  <div class="container" id="card">
+    <div class="glitch-wrap">
+      <div class="q-cold-main">Q COLD</div>
+    </div>
+
+    <div class="ice-emojis">
+      <span>🥶</span><span>❄️</span><span>🧊</span><span>🥶</span><span>❄️</span>
+    </div>
+
+    <p class="meme-line">сигма-режим: активирован 😎❄️</p>
+    <p class="meme-line">скибиди-вайб: подтверждён 🥶</p>
+    <p class="meme-line">уровень холода: МАКСИМАЛЬНЫЙ 🧊</p>
+
+    <button onclick="boom(event)">НАЖМИ 🥶</button>
+
+    <div id="surprise"></div>
+
+    <p class="footer-note">*осторожно: слишком Q COLD 🥶</p>
+  </div>
+
+<script>
+  // ===== СНЕЖИНКИ =====
+  function createSnowflake() {
+    const s = document.createElement('div');
+    s.classList.add('snowflake');
+    s.textContent = ['❄️', '❅', '❆', '•', '*'][Math.floor(Math.random() * 5)];
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.animationDuration = (Math.random() * 4 + 3) + 's';
+    s.style.fontSize = (Math.random() * 1.4 + 0.5) + 'rem';
+    s.style.opacity = Math.random() * 0.7 + 0.3;
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 8000);
+  }
+  setInterval(createSnowflake, 200);
+  for (let i = 0; i < 20; i++) setTimeout(createSnowflake, i * 100);
+
+  // ===== ВЗРЫВ ЧАСТИЦ =====
+  function explode(x, y) {
+    const emojis = ['🥶', '❄️', '🧊', '☃️', '✨', '💠', '🥶', '❄️'];
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = Math.random() * 400 + 100;
+      p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      p.style.animationDuration = (Math.random() * 0.6 + 0.8) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1500);
+    }
+  }
+
+  // ===== РЯБЬ =====
+  function ripple(x, y) {
+    const r = document.createElement('div');
+    r.classList.add('ripple');
+    r.style.left = x + 'px';
+    r.style.top = y + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 1000);
+  }
+
+  // ===== ЛЕДЯНОЙ ОВЕРЛЕЙ =====
+  function iceFlash() {
+    const o = document.createElement('div');
+    o.classList.add('ice-overlay');
+    document.body.appendChild(o);
+    setTimeout(() => o.remove(), 800);
+  }
+
+  // ===== ФРАЗЫ =====
+  const phrases = [
+    '🥶 ТЫ ОФИЦИАЛЬНО Q COLD 🥶',
+    'СИГМА-РЕЖИМ АКТИВИРОВАН 😎❄️',
+    'СКИБИДИ-ДОП-ДОП... 🥶',
+    'ХОЛОДНЕЕ ТОЛЬКО В АНТАРКТИДЕ 🧊',
+    '❄️ ВАЙБ ПОДТВЕРЖДЁН: Q COLD ❄️',
+    'ЛЕДЯНАЯ ЛЕГЕНДА 🏆🥶',
+    'СНЕГОВИК ЗАВИДУЕТ ☃️',
+    '🥶🥶🥶 МАКСИМАЛЬНЫЙ ХОЛОД 🥶🥶🥶',
+    'ГИГА-ЧАД ХОЛОДА 💠',
+    'Q COLD УРОВЕНЬ: БОГ 🥶⚡'
+  ];
+
+  let clicks = 0;
+
+  function boom(e) {
+    const rect = e.target.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    // Частицы
+    explode(cx, cy);
+    // Рябь
+    ripple(cx, cy);
+    // Фраза
+    const el = document.getElementById('surprise');
+    el.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+
+    clicks++;
+
+    // Каждый клик — эффект
+    if (clicks % 2 === 0) {
+      document.body.classList.add('shake-screen');
+      setTimeout(() => document.body.classList.remove('shake-screen'), 600);
+    }
+    if (clicks % 3 === 0) {
+      document.body.classList.add('invert-screen');
+      setTimeout(() => document.body.classList.remove('invert-screen'), 400);
+    }
+    if (clicks % 4 === 0) {
+      iceFlash();
+    }
+    if (clicks === 10) {
+      el.textContent = '🥶 ТЫ СЛОМАЛА СИСТЕМУ ХОЛОДА 🥶';
+    }
+  }
+</script>
+
+</body>
+</html>
